@@ -1,0 +1,21 @@
+package xiang.qi;
+
+/**
+ *
+ * @author adria
+ */
+public class F_Torre extends Ficha{
+
+    public F_Torre(int columna, int fila, COLOR_FICHA color){
+        super(columna, fila, color);
+        tipoFicha=TIPO_FICHA.Torre;
+        spriteX=200;
+        spriteY=(color.equals(COLOR_FICHA.rojo)?0:39);
+    }
+
+    @Override
+    public void movimientosValidos(){
+        
+    }
+    
+}
