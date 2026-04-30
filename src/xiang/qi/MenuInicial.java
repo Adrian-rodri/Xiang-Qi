@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 public class MenuInicial extends JPanel{
     Player player;
-    //PlayerManager playerManager= new PlayerManager();
+    PlayerManager playerManager= new PlayerManager();
     Color bg= Color.white;
     Color btn= bg;
     Color txt= new Color(0x699BC9);
@@ -29,14 +29,13 @@ public class MenuInicial extends JPanel{
         titulo.setForeground(Color.black);
         titulo.setFont(new Font("Times New Roman",Font.BOLD,34));
         
-        
+        playerManager.registrarPlayer(new Player("1","1"));
         /*
         Botones
         */
         panelBtn= new JPanel();
         panelBtn.setLayout(new BoxLayout(panelBtn,BoxLayout.Y_AXIS));
         panelBtn.setBackground(bg);
-        //panelBtn.setBorder(BorderFactory.createEmptyBorder(30, 0,0,0));
         Dimension d= new Dimension(300,50);
         
         JButton btnLogin = new JButton("Log In");
@@ -127,14 +126,14 @@ public class MenuInicial extends JPanel{
                 JOptionPane.showMessageDialog(this,"Llene todos los campos");
                 return;
             }
-//            player= playerManager.LogIn(userTxt, passTxt);
-//            if(player!=null){
-//                GameWindow.cambiarPantalla(new MenuPrincipal(player), "Principal");
-//                repaint();
-//                revalidate();
-//            }else{
-//                JOptionPane.showMessageDialog(this,"Incorrect Credentials");
-//            }
+            player= playerManager.LogIn(userTxt, passTxt);
+            if(player!=null){
+                GameFrame.cambiarPantalla(new GamePanel(), "Principal");
+                repaint();
+                revalidate();
+            }else{
+                JOptionPane.showMessageDialog(this,"Credenciales Incorrectas");
+            }
             
         });
         /*

@@ -1,10 +1,12 @@
 
 package xiang.qi;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author adria
  */
 public interface Movible {
-    public void movimientosValidos();
+    public ArrayList<Integer[]> movimientosValidos();
 }
