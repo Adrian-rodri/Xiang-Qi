@@ -22,7 +22,7 @@ public class F_Caballo extends Ficha {
     public ArrayList<Integer[]> movimientosValidos(){
         ArrayList<Integer[]> arrayValidos= new ArrayList<>();
         if(enTablero(col+1,fila) && BoardLogico.casillas[col+1][fila]==null){
-            if(esValido(col+2,fila+1))
+            if(esValido(col+2,fila+1) && !BoardLogico.reyesEnfrentados())
                 arrayValidos.add(new Integer[]{col+2,fila+1});
         }
         if(enTablero(col+1,fila) && BoardLogico.casillas[col+1][fila]==null){

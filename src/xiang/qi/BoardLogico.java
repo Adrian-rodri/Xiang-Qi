@@ -6,70 +6,48 @@ package xiang.qi;
  */
 public class BoardLogico {
     public static Ficha[][] casillas= new Ficha[9][10];
+    public static Ficha ultimaCapturada= null;
     
-    public boolean moverPieza(Ficha f, int col, int fila){
-        
-    return false;
-    }
+    
     public static Ficha[][] getFichas(){
         return casillas;
     }
+    public static boolean moverPieza(Ficha f, int col, int fila){
+        ultimaCapturada=casillas[col][fila];
+        casillas[f.col][f.fila]=null;
+        casillas[col][fila]=f;
+        f.col=col;
+        f.fila=fila;
+    return ultimaCapturada instanceof F_Rey;
+    }
+    public static boolean reyesEnfrentados(){
+    int colReyRojo=-1, filaReyRojo=-1,colReyNegro=-1, filaReyNegro=-1;
     
+    for(int i=0; i<casillas.length; i++){
+        for(int j=0; j<casillas[i].length; j++){
+            if(casillas[i][j] instanceof F_Rey){
+                if(casillas[i][j].color==COLOR_FICHA.rojo){
+                    colReyRojo=i; filaReyRojo=j;
+                }else{
+                    colReyNegro=i; filaReyNegro=j;
+                }
+            }
+        }
+    }
     
+    if(colReyRojo != colReyNegro)
+        return false;
     
+    int filaMin= Math.min(filaReyRojo, filaReyNegro)+1;
+    int filaMax= Math.max(filaReyRojo, filaReyNegro);
     
+    for(int f=filaMin; f<filaMax; f++){
+        if(casillas[colReyRojo][f]!=null)
+            return false; 
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    return true; 
+}
     public static  void inicializar(){
         //Rojo
         COLOR_FICHA rojo= COLOR_FICHA.rojo;
