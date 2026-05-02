@@ -14,18 +14,27 @@ import java.util.ArrayList;
  * @author adria
  */
 public class Board extends JPanel{
-    int txtX, txtY,fichaX,fichaY,bordeX,bordeY,clickX,clickY;
-    int tileSize=49;
-    int inicio=53;
-    Color borde=Color.BLACK;
-    Ficha fichita=null;
-    BufferedImage spreedSheet;
-    ArrayList<Integer[]> movimientosActuales= new ArrayList<>();
-    COLOR_FICHA turnoActual= COLOR_FICHA.rojo;
-    Board(){
+    private int bordeX,bordeY,clickX,clickY;
+    private int tileSize=49;
+    private int inicio=53;
+    private Color borde=Color.BLACK;
+    private Ficha fichita=null;
+    private BufferedImage spriteSheet=null;
+    private ArrayList<Integer[]> movimientosActuales= new ArrayList<>();
+    private COLOR_FICHA turnoActual= COLOR_FICHA.rojo;
+    private Player player1,player2;
+    private Player turnoPlayer;
+    
+    Board(Player player1, Player player2, Gestionable pM){
+        this.setBackground(Color.white);
+        this.player1=player1;
+        this.player2=player2;
         try{
-        spreedSheet= ImageIO.read(getClass().getResource("/recursos/fichas.png"));
-        }catch(IOException e){}
+        spriteSheet= ImageIO.read(getClass().getResource("/recursos/fichas.png"));
+        }catch(IOException e){
+            System.err.println("Error con imagen: "+ e.getMessage());
+        }
+        turnoPlayer=turnoActual.equals(COLOR_FICHA.rojo)?player1:player2;
         BoardLogico.inicializar();
         Timer timer= new Timer(60,e->{    
             repaint();
@@ -35,7 +44,7 @@ public class Board extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(fichita!=null){
-                    fichita.borde=fichita.color.color;
+                    fichita.setBorde(fichita.getColor().getColor());
                     clickX =e.getX();
                     clickY =e.getY();
 
@@ -45,70 +54,79 @@ public class Board extends JPanel{
                     for(Integer[] mov:movimientosActuales){
                         if(mov[0]==col && mov[1]==fila){
                             //simulacion
-                            Ficha fichaEnDestino= BoardLogico.casillas[col][fila];
-                            BoardLogico.casillas[fichita.col][fichita.fila] =null;
-                            BoardLogico.casillas[col][fila]= fichita;
+                            Ficha fichaEnDestino= BoardLogico.getCasillas()[col][fila];
+                            BoardLogico.setCasilla(fichita.getCol(),fichita.getFila(),null);
+                            BoardLogico.setCasilla(col,fila, fichita);
 
                             if(BoardLogico.reyesEnfrentados()){
                                 //reset
-                                BoardLogico.casillas[fichita.col][fichita.fila]=fichita;
-                                BoardLogico.casillas[col][fila]=fichaEnDestino;
+                                BoardLogico.setCasilla(fichita.getCol(),fichita.getFila(),fichita);
+                                BoardLogico.setCasilla(col, fila, fichaEnDestino);
                                 movimientosActuales.clear();
-                                fichita.borde =fichita.color.color;
+                                fichita.setBorde(fichita.getColor().getColor());
                                 fichita =null;
                                 GamePanel.lblFichas.setForeground(Color.black);
-                                GamePanel.lblFichas.setText("Reyes Enfrentados");
+                                GamePanel.lblFichas.setText("Ilegal: Reyes Enfrentados");
                                 break;
                                 
                             }
-                            //rest TIO
-                            BoardLogico.casillas[fichita.col][fichita.fila] =fichita;
-                            BoardLogico.casillas[col][fila] = fichaEnDestino;
-                            boolean ganador=BoardLogico.moverPieza(fichita, col, fila);
-                            if(ganador){
-                                JOptionPane.showMessageDialog(new JFrame(), "¡¡¡GANADOR!!! "+ turnoActual.name().toUpperCase());
-                                GameFrame.cambiarPantalla(GameFrame.menuInicio,"");
+                            //restTIO
+                            BoardLogico.setCasilla(fichita.getCol(),fichita.getFila(),fichita);
+                            BoardLogico.setCasilla(col, fila, fichaEnDestino);
+                            boolean gano=BoardLogico.moverPieza(fichita, col, fila);
+                            
+                            if(gano){
+                                Player ganador=turnoPlayer;
+                                Player perdedor=(turnoPlayer.equals(player1)?player2:player1);
+                                JOptionPane.showMessageDialog(new JFrame(), "JUGADOR "+ ganador.getUser() +" VENCIO A JUGADOR "+ perdedor.getUser()+", FELICIDADES HAS GANADO 3 PUNTOS");
+                                pM.agregarLog(perdedor,"JUGADOR "+perdedor.getUser()+" PERDIO, DEJANDO COMO GANADOR A "+ ganador.getUser());
+                                pM.agregarLog(ganador,"JUGADOR "+ganador.getUser()+" VENCIO A JUGADOR "+perdedor.getUser() +", FELICIDADES HAS GANADO 3 PUNTOS");
+                                ganador.sumarPuntos();
+                                
+                                GameWindow.setMenuPrincipal(player1, pM);
+                                GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(),"");
                             }
-                            if(BoardLogico.ultimaCapturada!=null){
-                                GamePanel.lblFichas.setForeground(BoardLogico.ultimaCapturada.color.equals(COLOR_FICHA.negro)?Color.red:Color.black);
-                                GamePanel.lblFichas.setText(turnoActual.toString().toUpperCase() +" capturo "+ BoardLogico.ultimaCapturada.tipoFicha.toString());
+                            if(BoardLogico.getUltimaCapturada()!=null){
+                                GamePanel.lblFichas.setForeground(BoardLogico.getUltimaCapturada().getColor().equals(COLOR_FICHA.negro)?Color.red:Color.black);
+                                GamePanel.lblFichas.setText(turnoActual.toString() +" capturó "+ BoardLogico.getUltimaCapturada().getTipoFicha().toString());
                             }else {
                                 GamePanel.lblFichas.setText("");
                             }
-                            turnoActual= fichita.color==COLOR_FICHA.rojo?COLOR_FICHA.negro:COLOR_FICHA.rojo;
-                            GamePanel.lblTurno.setText("Turno de: "+ turnoActual.toString());
+                            turnoActual= fichita.getColor()==COLOR_FICHA.rojo?COLOR_FICHA.negro:COLOR_FICHA.rojo;
+                            turnoPlayer=turnoActual.equals(COLOR_FICHA.rojo)?player1:player2;
+                            GamePanel.lblTurno.setText("Turno de: "+  turnoPlayer.getUser() +" - "+ turnoActual.name());
                             
                             break;
                         }
                             
                     }
-                    BoardLogico.ultimaCapturada=null;
+                    BoardLogico.setUltimaCapturada(null);
                     movimientosActuales.clear();
                     fichita=null;
                     return;
                     
                 }
-                clickX =e.getX();
-                clickY =e.getY();
+                clickX= e.getX();
+                clickY= e.getY();
 
-                int col =Math.round((float)(clickX - inicio) / tileSize);
-                int fila =Math.round((float)(clickY - inicio) / tileSize);
+                int col= Math.round((float)(clickX - inicio) / tileSize);
+                int fila= Math.round((float)(clickY - inicio) / tileSize);
 
-                if (col>=0 && col<BoardLogico.casillas.length && fila>= 0 &&fila<BoardLogico.casillas[0].length) {
+                if (col>=0 && col<BoardLogico.getCasillas().length && fila>= 0 &&fila<BoardLogico.getCasillas()[0].length) {
 
                     int centroX =inicio +(col *tileSize);
                     int centroY =inicio +(fila *tileSize);
 
-                    int dx =clickX - centroX;
-                    int dy =clickY - centroY;
+                    int dx= clickX - centroX;
+                    int dy= clickY - centroY;
                     int radio =20; 
 
                     if ((dx*dx + dy*dy)<=(radio*radio)) {
-                        if (BoardLogico.casillas[col][fila] !=null &&BoardLogico.casillas[col][fila].color==turnoActual) {
-                            fichita= BoardLogico.casillas[col][fila];
+                        if (BoardLogico.getCasillas()[col][fila] !=null &&BoardLogico.getCasillas()[col][fila].getColor()==turnoActual) {
+                            fichita= BoardLogico.getCasillas()[col][fila];
                             movimientosActuales= fichita.movimientosValidos();
                             borde= Color.green;
-                            BoardLogico.casillas[col][fila].borde= borde;
+                            BoardLogico.getCasillas()[col][fila].setBorde(borde);
                         }
                     }
                 }
@@ -168,22 +186,25 @@ public class Board extends JPanel{
         g2.setStroke(new BasicStroke(1.0f));
         //Ficha
 
-        
-        for(int i=0; i<BoardLogico.casillas.length;i++){
-            for(int j=0; j<BoardLogico.casillas[i].length;j++){
-                if(BoardLogico.casillas[i][j]==null)
+        if(spriteSheet!=null){
+        for(int i=0; i<BoardLogico.getCasillas().length;i++){
+            for(int j=0; j<BoardLogico.getCasillas()[i].length;j++){
+                if(BoardLogico.getCasillas()[i][j]==null)
                     continue;
-                Ficha fActual=BoardLogico.casillas[i][j];
+                Ficha fActual=BoardLogico.getCasillas()[i][j];
                 //imagen de la ficha
-                g2.drawImage(spreedSheet.getSubimage(fActual.spriteX, fActual.spriteY, 42, 42),inicio + (tileSize*fActual.col)-21,inicio+(tileSize*fActual.fila)-20, null);
+                g2.drawImage(spriteSheet.getSubimage(fActual.getSpriteX(), fActual.getSpriteY(), 42, 42),inicio + (tileSize*fActual.getCol())-21,inicio+(tileSize*fActual.getFila())-20, null);
                 //borde
-                g2.setColor(fActual.borde);
-                g2.setStroke(new BasicStroke(2.0f));
-                bordeX=inicio + (tileSize*fActual.col)-21;
-                bordeY=inicio+(tileSize*fActual.fila)-21;
-                g2.drawOval(bordeX, bordeY, 42, 42);
+                if(fActual.getBorde().equals(Color.green)){
+                    g2.setColor(fActual.getBorde());
+                    g2.setStroke(new BasicStroke(2.0f));
+                    bordeX=inicio + (tileSize*fActual.getCol())-22;
+                    bordeY=inicio+(tileSize*fActual.getFila())-21;
+                    g2.drawOval(bordeX, bordeY, 43, 43);
+                }
             }
 
+        }
         }
         ArrayList<Integer[]> copia=new ArrayList(movimientosActuales);
         for(Integer[] mov:copia){
@@ -194,4 +215,21 @@ public class Board extends JPanel{
         } 
         
         }
+
+    public COLOR_FICHA getTurnoActual() {
+        return turnoActual;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public Player getTurnoPlayer() {
+        return turnoPlayer;
+    }
+    
 }

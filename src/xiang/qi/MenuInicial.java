@@ -7,29 +7,30 @@ package xiang.qi;
 import javax.swing.*;
 import java.awt.*;
 public class MenuInicial extends JPanel{
-    Player player;
-    PlayerManager playerManager= new PlayerManager();
-    Color bg= Color.white;
-    Color btn= bg;
-    Color txt= new Color(0x699BC9);
-    Font fTxt= new Font("STXihei",Font.BOLD,20);
-    Font fBtn= new Font("STXihei",Font.BOLD,15);
-    JPanel panelBtn,panelLogin;
-    static public JPanel panelCrear;
-    static public JButton btnCreate;
-    static public JButton btnBackCrear;
-    static public JTextField txtUserNuevo;
-    static public JPasswordField txtContraNueva;
+    private Player player;
+    private Gestionable playerManager= new PlayerManager();
+    private Color bg= Color.white;
+    private Color btn= bg;
+    private Color txt= new Color(0x699BC9);
+    private Font fTxt= new Font("STXihei",Font.BOLD,20);
+    private Font fBtn= new Font("STXihei",Font.BOLD,15);
+    private JPanel panelBtn,panelLogin;
+    private JPanel panelCrear;
+    private JButton btnCreate;
+    private JButton btnBackCrear;
+    private JTextField txtUserNuevo;
+    private JTextField txtContraNueva;
     
     MenuInicial(){
         this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         setLayout(new BorderLayout());
         setBackground(bg);
-        JLabel titulo= new JLabel("Xing Qi",SwingConstants.CENTER);
+        JLabel titulo= new JLabel("Xing Qi Go!",SwingConstants.CENTER);
         titulo.setForeground(Color.black);
-        titulo.setFont(new Font("Times New Roman",Font.BOLD,34));
+        titulo.setFont(new Font("Bauhaus 93",Font.BOLD,34));
         
         playerManager.registrarPlayer(new Player("1","1"));
+        initPlayers();
         /*
         Botones
         */
@@ -128,12 +129,16 @@ public class MenuInicial extends JPanel{
             }
             player= playerManager.LogIn(userTxt, passTxt);
             if(player!=null){
-                GameFrame.cambiarPantalla(new GamePanel(), "Principal");
+                GameWindow.setMenuPrincipal(player, playerManager);
+                GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(), "Principal");
                 repaint();
                 revalidate();
             }else{
                 JOptionPane.showMessageDialog(this,"Credenciales Incorrectas");
             }
+            btnBackLog.doClick();
+            txtUsername.setText("");
+            txtContra.setText("");
             
         });
         /*
@@ -164,7 +169,7 @@ public class MenuInicial extends JPanel{
         panelCrear.add(new JLabel("Contraseña"),gbc);
         
         gbc.gridx=1;
-        txtContraNueva= new JPasswordField(15);
+        txtContraNueva= new JTextField(15);
         panelCrear.add(txtContraNueva,gbc);
         
         gbc.gridy=3;
@@ -185,7 +190,7 @@ public class MenuInicial extends JPanel{
         //Accion boton registar
         
         btnCreate.addActionListener(e->{
-            //playerManager.inicializar();
+            
             String newUserTxt= txtUserNuevo.getText();
             String newPassTxt= txtContraNueva.getText();
             
@@ -193,22 +198,35 @@ public class MenuInicial extends JPanel{
                 JOptionPane.showMessageDialog(this,"Llene todos los campos");
                 return;
             
-//            }else if(playerManager.existePlayer(newUserTxt)){
-//                JOptionPane.showMessageDialog(this,"Username already taken");
-//                return;
-            }else if(newPassTxt.length() !=5){
+            }
+            if(playerManager.existePlayer(newUserTxt)){
+                JOptionPane.showMessageDialog(this,"El username ya esta en uso");
+                return;
+            }
+            if(newPassTxt.length() !=5){
                 JOptionPane.showMessageDialog(this,"La contraseña tiene que ser de 5 characteres");
                 return;
             }
-            
-            //playerManager.registrarPlayer(new Player(newUserTxt,newPassTxt));
+            if(!newPassTxt.matches(".*[0-9].*")){
+                JOptionPane.showMessageDialog(this,"La contraseña debe contener almenos 1 numero");
+                return;
+            }
+            if(!newPassTxt.matches(".*[A-Z].*")){
+                JOptionPane.showMessageDialog(this,"La contraseña debe tener una letra mayuscula");
+                return;
+            }
+            if(!newPassTxt.matches(".*[a-z].*")){
+                JOptionPane.showMessageDialog(this,"La contraseña debe tener una letra miniscula");
+                return;
+            }
+            Player nuevo=new Player(newUserTxt,newPassTxt);
+            playerManager.registrarPlayer(nuevo);
             JOptionPane.showMessageDialog(this,"Se creo el player: "+newUserTxt+" exitosamente");
-            
-            GameFrame.cambiarPantalla(new GamePanel(), newPassTxt);
+            GameWindow.setMenuPrincipal(nuevo, playerManager);
+            GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(), "Principal");
             txtUserNuevo.setText("");
             txtContraNueva.setText("");
             btnBackCrear.doClick();
-            btnLogin.doClick();
             repaint();
             revalidate();
             
@@ -252,6 +270,22 @@ public class MenuInicial extends JPanel{
             
         });
         return btnRegresar;
+    }
+    private void initPlayers(){
+        Player maestro1=new Player("Maestro Huan","12345");
+        Player maestro2=new Player("Maestro Gín","12345");
+        Player maestro3=new Player("Maestro Shan","12345");
+        playerManager.registrarPlayer(maestro1);
+        playerManager.registrarPlayer(maestro2);
+        playerManager.registrarPlayer(maestro3);
+        maestro1.sumarPuntos();
+        maestro1.sumarPuntos();
+        maestro1.sumarPuntos();
+        maestro2.sumarPuntos();
+        maestro2.sumarPuntos();
+        maestro3.sumarPuntos();
+        maestro3.sumarPuntos();
+        maestro3.sumarPuntos();
     }
 }
 

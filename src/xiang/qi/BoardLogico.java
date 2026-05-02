@@ -4,20 +4,33 @@ package xiang.qi;
  *
  * @author adria
  */
+
 public class BoardLogico {
-    public static Ficha[][] casillas= new Ficha[9][10];
-    public static Ficha ultimaCapturada= null;
+    private static Ficha[][] casillas= new Ficha[9][10];
+    private  static Ficha ultimaCapturada= null;
     
-    
-    public static Ficha[][] getFichas(){
+    public static Ficha[][] getCasillas(){
         return casillas;
     }
+
+    public static Ficha getUltimaCapturada() {
+        return ultimaCapturada;
+    }
+
+    public static void setCasilla(int col, int fila, Ficha ficha) {
+        BoardLogico.casillas[col][fila]=ficha;
+    }
+
+    public static void setUltimaCapturada(Ficha ultimaCapturada) {
+        BoardLogico.ultimaCapturada = ultimaCapturada;
+    }
+    
     public static boolean moverPieza(Ficha f, int col, int fila){
         ultimaCapturada=casillas[col][fila];
-        casillas[f.col][f.fila]=null;
+        casillas[f.getCol()][f.getFila()]=null;
         casillas[col][fila]=f;
-        f.col=col;
-        f.fila=fila;
+        f.setCol(col);
+        f.setFila(fila);
     return ultimaCapturada instanceof F_Rey;
     }
     public static boolean reyesEnfrentados(){
@@ -26,7 +39,7 @@ public class BoardLogico {
     for(int i=0; i<casillas.length; i++){
         for(int j=0; j<casillas[i].length; j++){
             if(casillas[i][j] instanceof F_Rey){
-                if(casillas[i][j].color==COLOR_FICHA.rojo){
+                if(casillas[i][j].getColor()==COLOR_FICHA.rojo){
                     colReyRojo=i; filaReyRojo=j;
                 }else{
                     colReyNegro=i; filaReyNegro=j;
@@ -49,6 +62,7 @@ public class BoardLogico {
     return true; 
 }
     public static  void inicializar(){
+        casillas=new Ficha[9][10];
         //Rojo
         COLOR_FICHA rojo= COLOR_FICHA.rojo;
         F_Torre rojoTorre1= new F_Torre(0,9,rojo);
@@ -71,22 +85,22 @@ public class BoardLogico {
         /*
         Agregarlas 
         */
-        casillas[rojoTorre1.col][rojoTorre1.fila]=rojoTorre1;
-        casillas[rojoTorre2.col][rojoTorre2.fila]=rojoTorre2;
-        casillas[rojoCaballo1.col][rojoCaballo1.fila]=rojoCaballo1;
-        casillas[rojoCaballo2.col][rojoCaballo2.fila]=rojoCaballo2;
-        casillas[rojoElefante1.col][rojoElefante1.fila]=rojoElefante1;
-        casillas[rojoElefante2.col][rojoElefante2.fila]=rojoElefante2;
-        casillas[rojoConsejero1.col][rojoConsejero1.fila]=rojoConsejero1;
-        casillas[rojoConsejero2.col][rojoConsejero2.fila]=rojoConsejero2;
-        casillas[rojoRey.col][rojoRey.fila]=rojoRey;
-        casillas[rojoCañon1.col][rojoCañon1.fila]=rojoCañon1;
-        casillas[rojoCañon2.col][rojoCañon2.fila]=rojoCañon2;
-        casillas[rojoSoldado1.col][rojoSoldado1.fila]=rojoSoldado1;
-        casillas[rojoSoldado2.col][rojoSoldado2.fila]=rojoSoldado2;
-        casillas[rojoSoldado3.col][rojoSoldado3.fila]=rojoSoldado3;
-        casillas[rojoSoldado4.col][rojoSoldado4.fila]=rojoSoldado4;
-        casillas[rojoSoldado5.col][rojoSoldado5.fila]=rojoSoldado5;    
+        casillas[rojoTorre1.getCol()][rojoTorre1.getFila()]=rojoTorre1;
+        casillas[rojoTorre2.getCol()][rojoTorre2.getFila()]=rojoTorre2;
+        casillas[rojoCaballo1.getCol()][rojoCaballo1.getFila()]=rojoCaballo1;
+        casillas[rojoCaballo2.getCol()][rojoCaballo2.getFila()]=rojoCaballo2;
+        casillas[rojoElefante1.getCol()][rojoElefante1.getFila()]=rojoElefante1;
+        casillas[rojoElefante2.getCol()][rojoElefante2.getFila()]=rojoElefante2;
+        casillas[rojoConsejero1.getCol()][rojoConsejero1.getFila()]=rojoConsejero1;
+        casillas[rojoConsejero2.getCol()][rojoConsejero2.getFila()]=rojoConsejero2;
+        casillas[rojoRey.getCol()][rojoRey.getFila()]=rojoRey;
+        casillas[rojoCañon1.getCol()][rojoCañon1.getFila()]=rojoCañon1;
+        casillas[rojoCañon2.getCol()][rojoCañon2.getFila()]=rojoCañon2;
+        casillas[rojoSoldado1.getCol()][rojoSoldado1.getFila()]=rojoSoldado1;
+        casillas[rojoSoldado2.getCol()][rojoSoldado2.getFila()]=rojoSoldado2;
+        casillas[rojoSoldado3.getCol()][rojoSoldado3.getFila()]=rojoSoldado3;
+        casillas[rojoSoldado4.getCol()][rojoSoldado4.getFila()]=rojoSoldado4;
+        casillas[rojoSoldado5.getCol()][rojoSoldado5.getFila()]=rojoSoldado5;    
         //Negro
         COLOR_FICHA negro= COLOR_FICHA.negro;
         F_Torre negroTorre1= new F_Torre(0,0,negro);
@@ -109,21 +123,21 @@ public class BoardLogico {
         /*
         Agregarlas 
         */
-        casillas[negroTorre1.col][negroTorre1.fila]=negroTorre1;
-        casillas[negroTorre2.col][negroTorre2.fila]=negroTorre2;
-        casillas[negroCaballo1.col][negroCaballo1.fila]=negroCaballo1;
-        casillas[negroCaballo2.col][negroCaballo2.fila]=negroCaballo2;
-        casillas[negroElefante1.col][negroElefante1.fila]=negroElefante1;
-        casillas[negroElefante2.col][negroElefante2.fila]=negroElefante2;
-        casillas[negroConsejero1.col][negroConsejero1.fila]=negroConsejero1;
-        casillas[negroConsejero2.col][negroConsejero2.fila]=negroConsejero2;
-        casillas[negroRey.col][negroRey.fila]=negroRey;
-        casillas[negroCañon1.col][negroCañon1.fila]=negroCañon1;
-        casillas[negroCañon2.col][negroCañon2.fila]=negroCañon2;
-        casillas[negroSoldado1.col][negroSoldado1.fila]=negroSoldado1;
-        casillas[negroSoldado2.col][negroSoldado2.fila]=negroSoldado2;
-        casillas[negroSoldado3.col][negroSoldado3.fila]=negroSoldado3;
-        casillas[negroSoldado4.col][negroSoldado4.fila]=negroSoldado4;
-        casillas[negroSoldado5.col][negroSoldado5.fila]=negroSoldado5;   
+        casillas[negroTorre1.getCol()][negroTorre1.getFila()]=negroTorre1;
+        casillas[negroTorre2.getCol()][negroTorre2.getFila()]=negroTorre2;
+        casillas[negroCaballo1.getCol()][negroCaballo1.getFila()]=negroCaballo1;
+        casillas[negroCaballo2.getCol()][negroCaballo2.getFila()]=negroCaballo2;
+        casillas[negroElefante1.getCol()][negroElefante1.getFila()]=negroElefante1;
+        casillas[negroElefante2.getCol()][negroElefante2.getFila()]=negroElefante2;
+        casillas[negroConsejero1.getCol()][negroConsejero1.getFila()]=negroConsejero1;
+        casillas[negroConsejero2.getCol()][negroConsejero2.getFila()]=negroConsejero2;
+        casillas[negroRey.getCol()][negroRey.getFila()]=negroRey;
+        casillas[negroCañon1.getCol()][negroCañon1.getFila()]=negroCañon1;
+        casillas[negroCañon2.getCol()][negroCañon2.getFila()]=negroCañon2;
+        casillas[negroSoldado1.getCol()][negroSoldado1.getFila()]=negroSoldado1;
+        casillas[negroSoldado2.getCol()][negroSoldado2.getFila()]=negroSoldado2;
+        casillas[negroSoldado3.getCol()][negroSoldado3.getFila()]=negroSoldado3;
+        casillas[negroSoldado4.getCol()][negroSoldado4.getFila()]=negroSoldado4;
+        casillas[negroSoldado5.getCol()][negroSoldado5.getFila()]=negroSoldado5;   
     }
 }

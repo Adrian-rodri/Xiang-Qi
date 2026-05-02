@@ -10,23 +10,21 @@ public class F_Rey extends Ficha {
 
     public F_Rey(int columna, int fila, COLOR_FICHA color) {
         super(columna, fila, color);
-        tipoFicha=TIPO_FICHA.Rey;
-        spriteX=0;
-        this.spriteY=(color.equals(COLOR_FICHA.rojo))?50:1;
-        borde=color.color;
+        setTipoFicha(TIPO_FICHA.Rey);
+        setSpriteX(0);
     }
 
     @Override
     public ArrayList<Integer[]> movimientosValidos() {
         ArrayList<Integer[]> arrayValidos= new ArrayList<>();
-        if(enPalacio(col,fila+1))
-            arrayValidos.add(new Integer[]{col,fila+1});
-        if(enPalacio(col,fila-1))
-            arrayValidos.add(new Integer[]{col,fila-1});
-        if(enPalacio(col+1,fila))
-            arrayValidos.add(new Integer[]{col+1,fila});
-        if(enPalacio(col-1,fila))
-            arrayValidos.add(new Integer[]{col-1,fila});
+        if(enPalacio(getCol(),getFila()+1))
+            arrayValidos.add(new Integer[]{getCol(),getFila()+1});
+        if(enPalacio(getCol(),getFila()-1))
+            arrayValidos.add(new Integer[]{getCol(),getFila()-1});
+        if(enPalacio(getCol()+1,getFila()))
+            arrayValidos.add(new Integer[]{getCol()+1,getFila()});
+        if(enPalacio(getCol()-1,getFila()))
+            arrayValidos.add(new Integer[]{getCol()-1,getFila()});
         return arrayValidos;
     }
     

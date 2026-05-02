@@ -13,4 +13,6 @@ public interface Gestionable {
     public void eliminarPlayer(String username);
     public ArrayList<Player> getRanking();
     public void agregarLog(Player p, String log);
+    public Player buscarPlayer(String userName);
+    public ArrayList<Player> getPlayersActive(Player excluir);
 }

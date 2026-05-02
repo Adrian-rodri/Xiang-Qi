@@ -11,47 +11,45 @@ public class F_Caballo extends Ficha {
 
     public F_Caballo(int columna, int fila, COLOR_FICHA color){
         super(columna, fila, color);
-        tipoFicha=TIPO_FICHA.Caballo;
-        spriteX=288;
-        spriteY=(color.equals(COLOR_FICHA.rojo)?50:1);
-        borde=color.color;
+        setTipoFicha(TIPO_FICHA.Caballo);
+        setSpriteX(288);
 
     }
 
     @Override
     public ArrayList<Integer[]> movimientosValidos(){
         ArrayList<Integer[]> arrayValidos= new ArrayList<>();
-        if(enTablero(col+1,fila) && BoardLogico.casillas[col+1][fila]==null){
-            if(esValido(col+2,fila+1) && !BoardLogico.reyesEnfrentados())
-                arrayValidos.add(new Integer[]{col+2,fila+1});
+        if(enTablero(getCol()+1,getFila()) && BoardLogico.getCasillas()[getCol()+1][getFila()]==null){
+            if(esValido(getCol()+2,getFila()+1) && !BoardLogico.reyesEnfrentados())
+                arrayValidos.add(new Integer[]{getCol()+2,getFila()+1});
         }
-        if(enTablero(col+1,fila) && BoardLogico.casillas[col+1][fila]==null){
-            if(esValido(col+2,fila-1))
-                arrayValidos.add(new Integer[]{col+2,fila-1});
+        if(enTablero(getCol()+1,getFila()) && BoardLogico.getCasillas()[getCol()+1][getFila()]==null){
+            if(esValido(getCol()+2,getFila()-1))
+                arrayValidos.add(new Integer[]{getCol()+2,getFila()-1});
         }
-        if(enTablero(col-1,fila) && BoardLogico.casillas[col-1][fila]==null){
-            if(esValido(col-2,fila+1))
-                arrayValidos.add(new Integer[]{col-2,fila+1});
+        if(enTablero(getCol()-1,getFila()) && BoardLogico.getCasillas()[getCol()-1][getFila()]==null){
+            if(esValido(getCol()-2,getFila()+1))
+                arrayValidos.add(new Integer[]{getCol()-2,getFila()+1});
         }
-        if(enTablero(col-1,fila) && BoardLogico.casillas[col-1][fila]==null){
-            if(esValido(col-2,fila-1))
-                arrayValidos.add(new Integer[]{col-2,fila-1});
+        if(enTablero(getCol()-1,getFila()) && BoardLogico.getCasillas()[getCol()-1][getFila()]==null){
+            if(esValido(getCol()-2,getFila()-1))
+                arrayValidos.add(new Integer[]{getCol()-2,getFila()-1});
         }
-        if(enTablero(col,fila+1) && BoardLogico.casillas[col][fila+1]==null){
-            if(esValido(col+1,fila+2))
-                arrayValidos.add(new Integer[]{col+1,fila+2});
+        if(enTablero(getCol(),getFila()+1) && BoardLogico.getCasillas()[getCol()][getFila()+1]==null){
+            if(esValido(getCol()+1,getFila()+2))
+                arrayValidos.add(new Integer[]{getCol()+1,getFila()+2});
         }
-        if(enTablero(col,fila+1) && BoardLogico.casillas[col][fila+1]==null){
-            if(esValido(col-1,fila+2))
-                arrayValidos.add(new Integer[]{col-1,fila+2});
+        if(enTablero(getCol(),getFila()+1) && BoardLogico.getCasillas()[getCol()][getFila()+1]==null){
+            if(esValido(getCol()-1,getFila()+2))
+                arrayValidos.add(new Integer[]{getCol()-1,getFila()+2});
         }
-        if(enTablero(col,fila-1) && BoardLogico.casillas[col][fila-1]==null){
-            if(esValido(col+1,fila-2))
-                arrayValidos.add(new Integer[]{col+1,fila-2});
+        if(enTablero(getCol(),getFila()-1) && BoardLogico.getCasillas()[getCol()][getFila()-1]==null){
+            if(esValido(getCol()+1,getFila()-2))
+                arrayValidos.add(new Integer[]{getCol()+1,getFila()-2});
         }
-        if(enTablero(col,fila-1) && BoardLogico.casillas[col][fila-1]==null){
-            if(esValido(col-1,fila-2))
-                arrayValidos.add(new Integer[]{col-1,fila-2});
+        if(enTablero(getCol(),getFila()-1) && BoardLogico.getCasillas()[getCol()][getFila()-1]==null){
+            if(esValido(getCol()-1,getFila()-2))
+                arrayValidos.add(new Integer[]{getCol()-1,getFila()-2});
         }
         return arrayValidos;
         

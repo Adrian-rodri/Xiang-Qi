@@ -9,12 +9,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 
-public class GameFrame extends JFrame {
-    public static JLabel lblFicha;
+public class GameWindow extends JFrame {
+    protected static JLabel lblFicha;
     private static JPanel paneles;
     private static CardLayout cardLayout;
-    public static MenuInicial menuInicio= new MenuInicial();
-    GameFrame(){
+    protected static MenuInicial menuInicio= new MenuInicial();
+    private static MenuPrincipal menuPrincipal=null;
+    GameWindow(){
+        this.setMinimumSize(new Dimension(1250,800));
         this.setSize(1000,800);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,4 +30,11 @@ public class GameFrame extends JFrame {
         paneles.add(newPanel,name);
         cardLayout.show(paneles, name);
     }
+    public static MenuPrincipal getMenuprincipal(){
+        return menuPrincipal;   
+    }
+    public static void setMenuPrincipal(Player player, Gestionable pM){
+        menuPrincipal=new MenuPrincipal(player, pM);
+    }
+    
 }
