@@ -31,7 +31,7 @@ public class BoardLogico {
         casillas[col][fila]=f;
         f.setCol(col);
         f.setFila(fila);
-    return ultimaCapturada instanceof F_Rey;
+        return ultimaCapturada instanceof F_Rey;
     }
     public static boolean reyesEnfrentados(){
     int colReyRojo=-1, filaReyRojo=-1,colReyNegro=-1, filaReyNegro=-1;
@@ -39,7 +39,7 @@ public class BoardLogico {
     for(int i=0; i<casillas.length; i++){
         for(int j=0; j<casillas[i].length; j++){
             if(casillas[i][j] instanceof F_Rey){
-                if(casillas[i][j].getColor()==COLOR_FICHA.rojo){
+                if(casillas[i][j].getColor()==COLOR_FICHA.Rojo){
                     colReyRojo=i; filaReyRojo=j;
                 }else{
                     colReyNegro=i; filaReyNegro=j;
@@ -64,7 +64,7 @@ public class BoardLogico {
     public static  void inicializar(){
         casillas=new Ficha[9][10];
         //Rojo
-        COLOR_FICHA rojo= COLOR_FICHA.rojo;
+        COLOR_FICHA rojo= COLOR_FICHA.Rojo;
         F_Torre rojoTorre1= new F_Torre(0,9,rojo);
         F_Torre rojoTorre2= new F_Torre(8,9,rojo);
         F_Caballo rojoCaballo1= new F_Caballo(1,9,rojo);
@@ -102,7 +102,7 @@ public class BoardLogico {
         casillas[rojoSoldado4.getCol()][rojoSoldado4.getFila()]=rojoSoldado4;
         casillas[rojoSoldado5.getCol()][rojoSoldado5.getFila()]=rojoSoldado5;    
         //Negro
-        COLOR_FICHA negro= COLOR_FICHA.negro;
+        COLOR_FICHA negro= COLOR_FICHA.Negro;
         F_Torre negroTorre1= new F_Torre(0,0,negro);
         F_Torre negroTorre2= new F_Torre(8,0,negro);
         F_Caballo negroCaballo1= new F_Caballo(1,0,negro);

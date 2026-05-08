@@ -36,7 +36,7 @@ public class F_Elefante extends Ficha{
         return arrayValidos;
     }
     public boolean cruzaRio(int col,int fila){
-        if(getColor().equals(COLOR_FICHA.negro))
+        if(getColor().equals(COLOR_FICHA.Negro))
             return !(fila>4);
         else
             return !(fila<5);

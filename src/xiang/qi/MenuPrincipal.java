@@ -17,6 +17,7 @@ public class MenuPrincipal extends JPanel{
     private Font fbtn= new Font("STXihei",Font.BOLD,17);
     private BufferedImage imgBgr;
     private int contador;
+    private static CardLayout cardLayout= new CardLayout();
     
     MenuPrincipal(Player player, Gestionable playerManager){
         this.playerManager=playerManager;
@@ -27,10 +28,15 @@ public class MenuPrincipal extends JPanel{
         }catch(Exception e){
             System.err.println(e.getMessage());
         }
+        /* 
+        Panel Central
+        */
+        JPanel panelCentro= new JPanel(cardLayout);
         Image imgD= imgBgr.getScaledInstance(1280,720,Image.SCALE_SMOOTH);
         ImageIcon icon= new ImageIcon(imgD);
         JLabel lblImagen= new JLabel(icon);
-        add(lblImagen,BorderLayout.CENTER);
+        panelCentro.add(lblImagen);
+        add(panelCentro,BorderLayout.CENTER);
         /*
         Panel Izquierdo
         */
@@ -82,7 +88,7 @@ public class MenuPrincipal extends JPanel{
         menu.add(lblTitulo);
         menu.add(btnPlay);
         menu.add(btnPerfil);
-         menu.add(btnLog);
+        menu.add(btnLog);
         menu.add(btnClose);
         contador =0;
         btnPlay.addActionListener(e->{
@@ -137,4 +143,5 @@ public class MenuPrincipal extends JPanel{
         
         add(menu,BorderLayout.WEST);
         }
+    
 }

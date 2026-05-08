@@ -17,7 +17,7 @@ public class F_Soldado extends Ficha{
     @Override
     public ArrayList<Integer[]> movimientosValidos(){
         ArrayList<Integer[]> arrayValidos= new ArrayList<>();
-        if(getColor().equals(COLOR_FICHA.negro)){
+        if(getColor().equals(COLOR_FICHA.Negro)){
             if(getFila()<=4){
                 if(this.esValido(getCol(), getFila()+1))
                     arrayValidos.add(new Integer[]{getCol(),getFila()+1});

@@ -18,7 +18,7 @@ public abstract class Ficha {
         col=columna;
         this.fila=fila;
         this.color=color;
-        spriteY=(color.equals(COLOR_FICHA.rojo)?48:0);
+        spriteY=(color.equals(COLOR_FICHA.Rojo)?48:0);
         borde=color.getColor();
     }
     public abstract ArrayList<Integer[]> movimientosValidos();
@@ -33,7 +33,7 @@ public abstract class Ficha {
         return true;
     }
     public boolean enPalacio(int col, int fila){
-        if(color.equals(COLOR_FICHA.negro)){
+        if(color.equals(COLOR_FICHA.Negro)){
             if(col<3 || col >5 || fila<0 || fila>2)
                 return false;
         }else

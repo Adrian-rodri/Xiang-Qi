@@ -30,12 +30,12 @@ public class GamePanel extends JPanel {
         gbc.anchor= GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
         tablero=new Board(player1,player2,pM);
-        tablero.setPreferredSize(new Dimension(500,600));
+        tablero.setPreferredSize(new Dimension(700,600));
         add(tablero,gbc);
         
         gbc.gridx=2;
         gbc.gridy=1;
-        lblFichas= new JLabel("Captura una pieza");
+        lblFichas= new JLabel("");
         lblFichas.setForeground(Color.black);
         lblFichas.setFont(new Font("Dialogue",Font.BOLD,15));
         lblFichas.setPreferredSize(new Dimension(200,30));
@@ -65,4 +65,5 @@ public class GamePanel extends JPanel {
             }
         });
     }
+   
 }

@@ -21,20 +21,29 @@ public class Board extends JPanel{
     private Ficha fichita=null;
     private BufferedImage spriteSheet=null;
     private ArrayList<Integer[]> movimientosActuales= new ArrayList<>();
-    private COLOR_FICHA turnoActual= COLOR_FICHA.rojo;
+    private COLOR_FICHA turnoActual= COLOR_FICHA.Rojo;
     private Player player1,player2;
     private Player turnoPlayer;
+    private ArrayList<Ficha> arrayCapturadosPlayer1= new ArrayList<>(),arrayCapturadosPlayer2= new ArrayList<>();
     
     Board(Player player1, Player player2, Gestionable pM){
+        this.setLayout(null);
         this.setBackground(Color.white);
         this.player1=player1;
         this.player2=player2;
+        
+        JLabel lblTurno= new JLabel("");
+        lblTurno.setBounds(520,260,200,30);
+        lblTurno.setForeground(Color.black);
+        lblTurno.setFont(new Font("Dialogue",Font.BOLD,15));
+        
+        
         try{
         spriteSheet= ImageIO.read(getClass().getResource("/recursos/fichas.png"));
         }catch(IOException e){
             System.err.println("Error con imagen: "+ e.getMessage());
         }
-        turnoPlayer=turnoActual.equals(COLOR_FICHA.rojo)?player1:player2;
+        turnoPlayer=turnoActual.equals(COLOR_FICHA.Rojo)?player1:player2;
         BoardLogico.inicializar();
         Timer timer= new Timer(60,e->{    
             repaint();
@@ -87,13 +96,17 @@ public class Board extends JPanel{
                                 GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(),"");
                             }
                             if(BoardLogico.getUltimaCapturada()!=null){
-                                GamePanel.lblFichas.setForeground(BoardLogico.getUltimaCapturada().getColor().equals(COLOR_FICHA.negro)?Color.red:Color.black);
-                                GamePanel.lblFichas.setText(turnoActual.toString() +" capturó "+ BoardLogico.getUltimaCapturada().getTipoFicha().toString());
+                                if(turnoPlayer.equals(player1))
+                                    arrayCapturadosPlayer1.add(BoardLogico.getUltimaCapturada());
+                                else
+                                     arrayCapturadosPlayer2.add(BoardLogico.getUltimaCapturada());
+                                lblTurno.setForeground(BoardLogico.getUltimaCapturada().getColor().equals(COLOR_FICHA.Negro)?Color.red:Color.black);
+                                lblTurno.setText(turnoActual.toString() +" capturó "+ BoardLogico.getUltimaCapturada().getTipoFicha().toString());
                             }else {
-                                GamePanel.lblFichas.setText("");
+                                lblTurno.setText("");
                             }
-                            turnoActual= fichita.getColor()==COLOR_FICHA.rojo?COLOR_FICHA.negro:COLOR_FICHA.rojo;
-                            turnoPlayer=turnoActual.equals(COLOR_FICHA.rojo)?player1:player2;
+                            turnoActual= fichita.getColor()==COLOR_FICHA.Rojo?COLOR_FICHA.Negro:COLOR_FICHA.Rojo;
+                            turnoPlayer=turnoActual.equals(COLOR_FICHA.Rojo)?player1:player2;
                             GamePanel.lblTurno.setText("Turno de: "+  turnoPlayer.getUser() +" - "+ turnoActual.name());
                             
                             break;
@@ -148,6 +161,9 @@ public class Board extends JPanel{
             public void mouseExited(MouseEvent e) {
             }
         });
+        
+        
+        add(lblTurno);
         
         
     }
@@ -214,7 +230,38 @@ public class Board extends JPanel{
             g2.fillOval(centroX-10, centroY-10, 20, 20);
         } 
         
+        //Cajas de los lados
+        //negro
+        g2.setColor(new Color(0xCE5C00));
+        g2.fillRect(503, 0, 200, 250);
+        
+        g2.setColor(Color.black);
+        g2.fillRect(507, 4, 190, 242);
+        g2.setColor(new Color(0xFCAF3E));
+        g2.fillRect(527, 10, 150, 228);
+        for(int i=0;i<arrayCapturadosPlayer2.size();i++){
+            int col= i%3;
+            int fila= i/3;
+            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer2.get(i).getSpriteX(), arrayCapturadosPlayer2.get(i).getSpriteY(), 42, 42), 530+(col*45), 10+(fila*50), null);            
         }
+        
+        //rojo
+        g2.setColor(new Color(0xCE5C00));
+        g2.setColor(Color.black);
+        g2.fillRect(503, 300, 200, 250);
+        
+        g2.setColor(new Color(0xD10000));
+        g2.fillRect(507, 304, 190, 242);
+        g2.setColor(new Color(0xFCAF3E));
+        g2.fillRect(527, 310, 150, 228);
+        
+        for(int i=0;i<arrayCapturadosPlayer1.size();i++){
+            int col= i%3;
+            int fila= i/3;
+            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer1.get(i).getSpriteX(), arrayCapturadosPlayer1.get(i).getSpriteY(), 42, 42) , 530+(col*45),310 +(fila*50), null);
+        }
+        }
+    
 
     public COLOR_FICHA getTurnoActual() {
         return turnoActual;

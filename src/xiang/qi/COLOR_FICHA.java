@@ -7,7 +7,7 @@ import java.awt.Color;
  * @author adria
  */
 public enum COLOR_FICHA {
-    rojo(1),negro(2);
+    Rojo(1),Negro(2);
     private Color color;
     COLOR_FICHA(int i){
         switch(i){
@@ -17,8 +17,6 @@ public enum COLOR_FICHA {
             case 2:
                 color=Color.white;
                 break;
-            
-            
         }
     }
 

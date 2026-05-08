@@ -13,7 +13,6 @@ public class F_Caballo extends Ficha {
         super(columna, fila, color);
         setTipoFicha(TIPO_FICHA.Caballo);
         setSpriteX(288);
-
     }
 
     @Override
@@ -51,8 +50,7 @@ public class F_Caballo extends Ficha {
             if(esValido(getCol()-1,getFila()-2))
                 arrayValidos.add(new Integer[]{getCol()-1,getFila()-2});
         }
-        return arrayValidos;
-        
+        return arrayValidos;   
     }
     
 }
