@@ -131,12 +131,13 @@ public class MenuInicial extends JPanel{
             if(player!=null){
                 GameWindow.setMenuPrincipal(player, playerManager);
                 GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(), "Principal");
+                btnBackLog.doClick();
                 repaint();
                 revalidate();
             }else{
                 JOptionPane.showMessageDialog(this,"Credenciales Incorrectas");
             }
-            btnBackLog.doClick();
+            
             txtUsername.setText("");
             txtContra.setText("");
             

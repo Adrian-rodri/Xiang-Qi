@@ -87,9 +87,9 @@ public class Board extends JPanel{
                             if(gano){
                                 Player ganador=turnoPlayer;
                                 Player perdedor=(turnoPlayer.equals(player1)?player2:player1);
-                                JOptionPane.showMessageDialog(new JFrame(), "JUGADOR "+ ganador.getUser() +" VENCIO A JUGADOR "+ perdedor.getUser()+", FELICIDADES HAS GANADO 3 PUNTOS");
-                                pM.agregarLog(perdedor,"JUGADOR "+perdedor.getUser()+" PERDIO, DEJANDO COMO GANADOR A "+ ganador.getUser());
-                                pM.agregarLog(ganador,"JUGADOR "+ganador.getUser()+" VENCIO A JUGADOR "+perdedor.getUser() +", FELICIDADES HAS GANADO 3 PUNTOS");
+                                JOptionPane.showMessageDialog(new JFrame(),  ganador.getUser() +" VENCIO A "+ perdedor.getUser()+", FELICIDADES HAS GANADO 3 PUNTOS");
+                                pM.agregarLog(perdedor,perdedor.getUser()+" PERDIO, DEJANDO COMO GANADOR A "+ ganador.getUser());
+                                pM.agregarLog(ganador,ganador.getUser()+" VENCIO A "+perdedor.getUser() +", FELICIDADES HAS GANADO 3 PUNTOS");
                                 ganador.sumarPuntos();
                                 
                                 GameWindow.setMenuPrincipal(player1, pM);

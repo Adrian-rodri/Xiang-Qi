@@ -45,8 +45,10 @@ public class PlayerManager implements Gestionable{
     @Override
     public void eliminarPlayer(String username) {
         for(int i=0; i<arrayPlayers.size();i++){
-            if(arrayPlayers.get(i).getUser().equals(username))
-                arrayPlayers.get(i).desActivar();
+            if(arrayPlayers.get(i).getUser().equals(username)){
+                arrayPlayers.remove(i);
+                return;
+            }
         }
     }
 

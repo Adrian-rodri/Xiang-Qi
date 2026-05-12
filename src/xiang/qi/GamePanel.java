@@ -56,9 +56,9 @@ public class GamePanel extends JPanel {
             if(option==JOptionPane.YES_OPTION){
                 Player perdedor=tablero.getTurnoPlayer();
                 Player ganador= tablero.getTurnoPlayer().equals(tablero.getPlayer1())?tablero.getPlayer2():tablero.getPlayer1();
-                JOptionPane.showMessageDialog(new JFrame(), "JUGADOR "+perdedor.getUser()+" SE HA RETIRADO, FELICIDADES JUGADOR "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
-                perdedor.agregarLog("JUGADOR "+perdedor.getUser()+" SE HA RETIRADO, DEJANDO COMO GANADOR A "+ ganador.getUser());
-                ganador.agregarLog("JUGADOR "+perdedor.getUser()+" SE HA RETIRADO, FELICIDADES JUGADOR "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
+                JOptionPane.showMessageDialog(new JFrame(), perdedor.getUser()+" SE HA RETIRADO, FELICIDADES "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
+                perdedor.agregarLog(perdedor.getUser()+" SE HA RETIRADO, DEJANDO COMO GANADOR A "+ ganador.getUser());
+                ganador.agregarLog(perdedor.getUser()+" SE HA RETIRADO, FELICIDADES "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
                 ganador.sumarPuntos();
                 GameWindow.setMenuPrincipal(player1, pM);
                 GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(),"");
