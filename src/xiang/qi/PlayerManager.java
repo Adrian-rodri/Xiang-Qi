@@ -10,7 +10,7 @@ public class PlayerManager implements Gestionable{
     private ArrayList<Player> arrayPlayers= new ArrayList<>();
     @Override
     public void registrarPlayer(Player player) {
-        if(!existePlayer(player.getPassword())){
+        if(!existePlayer(player.getUser())){
             arrayPlayers.add(player);
         }
     }
@@ -80,7 +80,7 @@ public class PlayerManager implements Gestionable{
     }
 
     @Override
-    public void agregarLog(Player p, String log) {
+    public void agregarLog(Player p, Log log) {
        if(existePlayer(p.getUser()))
            p.agregarLog(log);
     }

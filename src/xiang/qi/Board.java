@@ -26,7 +26,7 @@ public class Board extends JPanel{
     private Player turnoPlayer;
     private ArrayList<Ficha> arrayCapturadosPlayer1= new ArrayList<>(),arrayCapturadosPlayer2= new ArrayList<>();
     
-    Board(Player player1, Player player2, Gestionable pM){
+    Board(Player player1, Player player2, Gestionable playerManager){
         this.setLayout(null);
         this.setBackground(Color.white);
         this.player1=player1;
@@ -74,8 +74,8 @@ public class Board extends JPanel{
                                 movimientosActuales.clear();
                                 fichita.setBorde(fichita.getColor().getColor());
                                 fichita =null;
-                                GamePanel.lblFichas.setForeground(Color.black);
-                                GamePanel.lblFichas.setText("Ilegal: Reyes Enfrentados");
+                                lblTurno.setForeground(Color.black);
+                                lblTurno.setText("Ilegal: Reyes Enfrentados");
                                 break;
                                 
                             }
@@ -87,12 +87,14 @@ public class Board extends JPanel{
                             if(gano){
                                 Player ganador=turnoPlayer;
                                 Player perdedor=(turnoPlayer.equals(player1)?player2:player1);
-                                JOptionPane.showMessageDialog(new JFrame(),  ganador.getUser() +" VENCIO A "+ perdedor.getUser()+", FELICIDADES HAS GANADO 3 PUNTOS");
-                                pM.agregarLog(perdedor,perdedor.getUser()+" PERDIO, DEJANDO COMO GANADOR A "+ ganador.getUser());
-                                pM.agregarLog(ganador,ganador.getUser()+" VENCIO A "+perdedor.getUser() +", FELICIDADES HAS GANADO 3 PUNTOS");
-                                ganador.sumarPuntos();
+                                LogGanador logGano= new LogGanador(ganador.getUser(),perdedor.getUser());
+                                LogPerdedor logPerdio= new LogPerdedor(ganador.getUser(),perdedor.getUser());
                                 
-                                GameWindow.setMenuPrincipal(player1, pM);
+                                JOptionPane.showMessageDialog(new JFrame(), logGano.getMensaje() );
+                                playerManager.agregarLog(perdedor,logPerdio);
+                                playerManager.agregarLog(ganador,logGano);
+                                
+                                GameWindow.setMenuPrincipal(player1, playerManager);
                                 GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(),"");
                             }
                             if(BoardLogico.getUltimaCapturada()!=null){

@@ -54,12 +54,12 @@ public class GamePanel extends JPanel {
         btnRendirse.addActionListener(e->{
             int option = JOptionPane.showConfirmDialog(new JFrame(), tablero.getTurnoPlayer().getUser()+" Seguro que quieres rendirte");
             if(option==JOptionPane.YES_OPTION){
-                Player perdedor=tablero.getTurnoPlayer();
+                Player retirado=tablero.getTurnoPlayer();
                 Player ganador= tablero.getTurnoPlayer().equals(tablero.getPlayer1())?tablero.getPlayer2():tablero.getPlayer1();
-                JOptionPane.showMessageDialog(new JFrame(), perdedor.getUser()+" SE HA RETIRADO, FELICIDADES "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
-                perdedor.agregarLog(perdedor.getUser()+" SE HA RETIRADO, DEJANDO COMO GANADOR A "+ ganador.getUser());
-                ganador.agregarLog(perdedor.getUser()+" SE HA RETIRADO, FELICIDADES "+ganador.getUser() +", HAS GANADO 3 PUNTOS");
-                ganador.sumarPuntos();
+                LogRetiro logRetiro= new LogRetiro(ganador.getUser(),retirado.getUser());
+                JOptionPane.showMessageDialog(new JFrame(), logRetiro.getGanadorLog().getMensaje());
+                retirado.agregarLog(logRetiro);
+                ganador.agregarLog(logRetiro.getGanadorLog());
                 GameWindow.setMenuPrincipal(player1, pM);
                 GameWindow.cambiarPantalla(GameWindow.getMenuprincipal(),"");
             }

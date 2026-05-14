@@ -255,8 +255,8 @@ public class MenuPrincipal extends JPanel{
         String txtActLog="";
         if(player.getLogs().isEmpty())
             txtActLog= "AUN NO HAS JUGADO";
-        for(String l:player.getLogs()){
-            txtActLog+=l+"\n";
+        for(Log l:player.getLogs()){
+            txtActLog+=l.getMensaje()+"\n";
         }
         txtLogs.setText(txtActLog);
         panelReport.add(txtLogs,gbc);

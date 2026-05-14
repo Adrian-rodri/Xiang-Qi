@@ -10,7 +10,7 @@ import java.util.Calendar;
  */
 public final class Player {
     private String user,password;
-    private ArrayList<String> logs= new ArrayList<>();
+    private ArrayList<Log> logs= new ArrayList<>();
     private int puntos;
     private boolean activo;
     private Calendar fechaIngreso;
@@ -21,14 +21,17 @@ public final class Player {
         activo=true;
         fechaIngreso=Calendar.getInstance();
     }
-    public final void agregarLog(String mensaje){
-        logs.add(0,mensaje);
+    public final void agregarLog(Log log){
+        logs.add(0,log);
+        if(log instanceof LogGanador){
+            sumarPuntos(((LogGanador) log).getpuntosGanados());
+        }
     }
     public final void desActivar(){
         activo=false;
     }
-    public final void sumarPuntos(){
-        puntos+=3;
+    public final void sumarPuntos(int puntos){
+        this.puntos+=puntos;
     }
     //Getters
     public String getUser() {
@@ -39,7 +42,7 @@ public final class Player {
         return password;
     }
 
-    public ArrayList<String> getLogs() {
+    public ArrayList<Log> getLogs() {
         return logs;
     }
 
@@ -63,7 +66,7 @@ public final class Player {
         this.password = password;
     }
 
-    public void setLogs(ArrayList<String> logs) {
+    public void setLogs(ArrayList<Log> logs) {
         this.logs = logs;
     }
 
