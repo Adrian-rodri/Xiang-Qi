@@ -244,7 +244,7 @@ public class Board extends JPanel{
         for(int i=0;i<arrayCapturadosPlayer2.size();i++){
             int col= i%3;
             int fila= i/3;
-            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer2.get(i).getSpriteX(), arrayCapturadosPlayer2.get(i).getSpriteY(), 42, 42), 530+(col*45), 10+(fila*50), null);            
+            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer2.get(i).getSpriteX(), arrayCapturadosPlayer2.get(i).getSpriteY(), 42, 42), 534+(col*45), 10+(fila*43), null);            
         }
         
         //rojo
@@ -260,7 +260,7 @@ public class Board extends JPanel{
         for(int i=0;i<arrayCapturadosPlayer1.size();i++){
             int col= i%3;
             int fila= i/3;
-            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer1.get(i).getSpriteX(), arrayCapturadosPlayer1.get(i).getSpriteY(), 42, 42) , 530+(col*45),310 +(fila*50), null);
+            g2.drawImage(spriteSheet.getSubimage(arrayCapturadosPlayer1.get(i).getSpriteX(), arrayCapturadosPlayer1.get(i).getSpriteY(), 42, 42) , 534+(col*45),310 +(fila*43), null);
         }
         }
     

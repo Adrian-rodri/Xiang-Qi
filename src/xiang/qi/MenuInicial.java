@@ -29,7 +29,6 @@ public class MenuInicial extends JPanel{
         titulo.setForeground(Color.black);
         titulo.setFont(new Font("Bauhaus 93",Font.BOLD,34));
         
-        playerManager.registrarPlayer(new Player("1","1"));
         initPlayers();
         /*
         Botones
@@ -273,44 +272,45 @@ public class MenuInicial extends JPanel{
         return btnRegresar;
     }
     private void initPlayers(){
-    Player maestro1= new Player("Maestro Huan","Aa123");
-    Player maestro2= new Player("Maestro Gín","Aa123");
-    Player maestro3= new Player("Maestro Shan","Aa123");
-    playerManager.registrarPlayer(maestro1);
-    playerManager.registrarPlayer(maestro2);
-    playerManager.registrarPlayer(maestro3);
-    //maestro1 vence a meastro2 
-    playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro2.getUser()));
-    playerManager.agregarLog(maestro2, new LogPerdedor(maestro1.getUser(), maestro2.getUser()));
+        playerManager.registrarPlayer(new Player("adrian","Aa123"));
+        Player maestro1= new Player("Maestro Huan","Aa123");
+        Player maestro2= new Player("Maestro Gin","Aa123");
+        Player maestro3= new Player("Maestro Shan","Aa123");
+        playerManager.registrarPlayer(maestro1);
+        playerManager.registrarPlayer(maestro2);
+        playerManager.registrarPlayer(maestro3);
+        //maestro1 vence a meastro2 
+        playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro2.getUser()));
+        playerManager.agregarLog(maestro2, new LogPerdedor(maestro1.getUser(), maestro2.getUser()));
 
-    //maestro1 vence a maestro3
-    playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro3.getUser()));
-    playerManager.agregarLog(maestro3, new LogPerdedor(maestro1.getUser(), maestro3.getUser()));
+        //maestro1 vence a maestro3
+        playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro3.getUser()));
+        playerManager.agregarLog(maestro3, new LogPerdedor(maestro1.getUser(), maestro3.getUser()));
 
-    //maestro1 vence a maestro2
-    playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro2.getUser()));
-    playerManager.agregarLog(maestro2, new LogPerdedor(maestro1.getUser(), maestro2.getUser()));
+        //maestro1 vence a maestro2
+        playerManager.agregarLog(maestro1, new LogGanador(maestro1.getUser(), maestro2.getUser()));
+        playerManager.agregarLog(maestro2, new LogPerdedor(maestro1.getUser(), maestro2.getUser()));
 
-    //maestro2 vence a maestro3
-    playerManager.agregarLog(maestro2, new LogGanador(maestro2.getUser(), maestro3.getUser()));
-    playerManager.agregarLog(maestro3, new LogPerdedor(maestro2.getUser(), maestro3.getUser()));
+        //maestro2 vence a maestro3
+        playerManager.agregarLog(maestro2, new LogGanador(maestro2.getUser(), maestro3.getUser()));
+        playerManager.agregarLog(maestro3, new LogPerdedor(maestro2.getUser(), maestro3.getUser()));
 
-    //maestro2 vence a maestro1
-    playerManager.agregarLog(maestro2, new LogGanador(maestro2.getUser(), maestro1.getUser()));
-    playerManager.agregarLog(maestro1, new LogPerdedor(maestro2.getUser(), maestro1.getUser()));
+        //maestro2 vence a maestro1
+        playerManager.agregarLog(maestro2, new LogGanador(maestro2.getUser(), maestro1.getUser()));
+        playerManager.agregarLog(maestro1, new LogPerdedor(maestro2.getUser(), maestro1.getUser()));
 
-    //maestro3 vence a maestro1
-    playerManager.agregarLog(maestro3, new LogGanador(maestro3.getUser(), maestro1.getUser()));
-    playerManager.agregarLog(maestro1, new LogPerdedor(maestro3.getUser(), maestro1.getUser()));
+        //maestro3 vence a maestro1
+        playerManager.agregarLog(maestro3, new LogGanador(maestro3.getUser(), maestro1.getUser()));
+        playerManager.agregarLog(maestro1, new LogPerdedor(maestro3.getUser(), maestro1.getUser()));
 
-    //maestro3 vence a maestro2
-    playerManager.agregarLog(maestro3, new LogGanador(maestro3.getUser(), maestro2.getUser()));
-    playerManager.agregarLog(maestro2, new LogPerdedor(maestro3.getUser(), maestro2.getUser()));
+        //maestro3 vence a maestro2
+        playerManager.agregarLog(maestro3, new LogGanador(maestro3.getUser(), maestro2.getUser()));
+        playerManager.agregarLog(maestro2, new LogPerdedor(maestro3.getUser(), maestro2.getUser()));
 
-    // meastro1 se retira contra maestro3
-    LogRetiro retiro = new LogRetiro(maestro3.getUser(), maestro1.getUser());
-    playerManager.agregarLog(maestro1, retiro);
-    playerManager.agregarLog(maestro3, retiro.getGanadorLog());
-}
+        // meastro1 se retira contra maestro3
+        LogRetiro retiro = new LogRetiro(maestro3.getUser(), maestro1.getUser());
+        playerManager.agregarLog(maestro1, retiro);
+        playerManager.agregarLog(maestro3, retiro.getGanadorLog());
+    }
 }
 
